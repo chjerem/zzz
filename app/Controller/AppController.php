@@ -20,6 +20,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 /**
  * Application Controller
@@ -62,4 +63,10 @@ class AppController extends Controller {
 		return true;
 	}
 	//Utiliser isAuthorized() dans les AUTRES Controller (par ex : Users les méthodes admin_ ;)) pour les pages admin
+
+	public function debug($var) {
+		print('<pre>');
+		print_r($var);
+		print('</pre>');
+	}
 }
