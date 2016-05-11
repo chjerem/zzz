@@ -38,31 +38,16 @@ class AppController extends Controller {
 		'Session',
 		'Flash',
 		'Auth' => array(
-			'loginRedirect' => array(
-				'controller' => 'home',
-				'action' => 'index'
-				),
-			'logoutRedirect' => array('controller' => 'home', 'action' => 'index'),
+			'loginRedirect' => array('controller' => 'home', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 			'authError' => 'Vous n\'êtes pas autorisé à visionner cette page.',
-			'authenticate' => array(
-				'Form' => array(
-					'fields' => array(
-                        'username' => 'email', //Default is 'username' in the userModel
-                        'password' => 'password'  //Default is 'password' in the userModel
-                        )
-					)
-				)
+			'authenticate' => array('Form' => array('fields' => array('username' => 'email', 'password' => 'password')))
 			)
 		);
 
 	public function beforeFilter() {
 		$this->layout = 'front';
 	}
-
-	public function isAuthorized() {
-		return true;
-	}
-	//Utiliser isAuthorized() dans les AUTRES Controller (par ex : Users les méthodes admin_ ;)) pour les pages admin
 
 	public function debug($var) {
 		print('<pre>');

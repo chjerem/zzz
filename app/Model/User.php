@@ -20,6 +20,8 @@ class User extends AppModel {
             'message' => 'L\'adresse mail doit être comprise entre 6 et 255 caractères'
             ))
       );
+
+   public $belongsTo = 'Scope';
    
    public function beforeSave($options = array()) {
       if (!empty($this->data[$this->alias]['password'])) {
