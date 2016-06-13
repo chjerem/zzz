@@ -21,7 +21,7 @@ class User extends AppModel {
             ))
       );
 
-   public $belongsTo = 'Scope';
+   //public $belongsTo = 'Scope';
    
    public function beforeSave($options = array()) {
       if (!empty($this->data[$this->alias]['password'])) {
