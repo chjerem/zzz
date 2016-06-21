@@ -38,8 +38,6 @@ class AppController extends Controller {
 		'Session',
 		'Flash',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'home', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 			'authError' => 'Vous n\'êtes pas autorisé à visionner cette page.',
 			'authenticate' => array('Form' => array('fields' => array('username' => 'email', 'password' => 'password')))
 			)
@@ -47,6 +45,7 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 		$this->layout = 'front';
+		$this->set('where', '');
 	}
 
 	public function debug($var) {

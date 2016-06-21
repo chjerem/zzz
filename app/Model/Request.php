@@ -19,4 +19,11 @@ class Request extends AppModel {
 		'TypeIs' => array('className' => 'Type', 'foreignKey' => 'type_id'),
 		'Asker' => array('className' => 'User', 'foreignKey' => 'user_id')
 		);
+
+	public $hasMany = array(
+        'Contacts' => array(
+            'className' => 'Contact',
+            'foreignKey' => 'request_id'
+        )
+    );
 }

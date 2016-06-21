@@ -19,6 +19,11 @@
                     array('action' => 'editcolor', $color['Color']['id']),
                     array('escape' => false)
                 ); ?>
+                <?php echo $this->Html->link(
+                    $this->Html->tag('span', '', array('class' => 'glyphicon glyphicon-remove text-center', 'alt' => 'Suppression')),
+                    array('action' => 'deletecolor', $color['Color']['id']),
+                    array('escape' => false)
+                ); ?>
             </td>
         </tr>
         <?php } ?>
