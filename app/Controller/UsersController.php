@@ -3,8 +3,7 @@ class UsersController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('login', 'test');-
-		$this->Auth->deny('login');
+		$this->Auth->allow('login', 'add');
 	}
 
 	public function index() {
@@ -12,16 +11,33 @@ class UsersController extends AppController {
 		parent::debug($users);
 	}
 
-	public function test() {
-		/*$this->loadModel('Request');
-		$requests = $this->Request->find('all');
-		parent::debug($requests);
-		exit;*/
-		//$this->Request
-		$this->loadModel('Contact');
-		$contacts = $this->Contact->find('all');
-		parent::debug($contacts);
-		exit;
+	public function add() {
+		$this->loadModel('Scope');
+		$this->set('scopes', $this->Scope->find('all'));
+		$scopes = $this->Scope->find('all');
+		$scopeoption = array();
+		foreach($scopes as $scope) {
+			$scopeoption[$scope['Scope']['id']] = $scope['Scope']['name'];
+		}
+
+		$this->set('scopeoption', $scopeoption);
+
+		if($this->request->is('post')) {
+			$this->User->create();
+			if($this->request->data['User']['password'] === $this->request->data['User']['passwordconfirm']) {
+				$this->request->data['User']['isZZZ'] = 0;
+				if($this->User->save($this->request->data)) {
+					$this->Session->setFlash(__("Votre compte a été créé ! Merci de consulter votre boite mail."), 'alert-success');
+					return $this->redirect(array('action' => 'login'));
+				} else {
+					$this->Session->setFlash(__("Erreur survenue"), 'alert-danger');
+					return $this->redirect(array('action' => 'add'));
+				}
+			} else {
+				$this->Session->setFlash(__("Les passwords ne correspondent pas..."), 'alert-danger');
+				return $this->redirect(array('action' => 'add'));
+			}
+		}
 	}
 
 	public function login() {
@@ -31,7 +47,7 @@ class UsersController extends AppController {
 				$this->redirect(array('controller' => 'admins', 'action' => 'index'));
 			} else {
 				//setFlash
-				$this->redirect(array('controller' => 'home', 'action' => 'index'));
+				$this->redirect(array('action' => 'login'));
 			}
 		}
 	}

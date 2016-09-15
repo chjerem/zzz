@@ -6,7 +6,7 @@ class AdminsController extends AppController {
 		parent::beforeFilter();
 		//$this->layout = 'back'; //Charge le layout back
 		//Si l'utilisateur n'est pas ZZZ, redirection sur la HP
-		if ($this->name == 'Admins' && !$this->Session->read('Auth.User.isZZZ')) {
+		if ($this->name == 'Admins' && !$this->Session->read('Auth.User.is_zzz')) {
 			$this->redirect(array('controller' => 'home', 'action' => 'index'));
 		}
 
@@ -83,13 +83,12 @@ class AdminsController extends AppController {
 	public function editcolor($id=null) {
 		$this->loadModel('Color');
 		if(!$id) {
-			$this->Session->setFlash("La couleur n'a pas été éditée", 'alert-danger');
 			return $this->redirect(array('action' => 'colors'));
 		}
 
 		$color = $this->Color->findById($id);
 		if(!$color) {
-			$this->Session->setFlash(__("La couleur n'a pas été éditée"), 'alert-danger');
+			$this->Session->setFlash(__("La couleur n'existe pas"), 'alert-danger');
 			return $this->redirect(array('action' => 'colors'));
 		}
 
@@ -99,7 +98,7 @@ class AdminsController extends AppController {
 				$this->Session->setFlash(__("La couleur a été éditée"), 'alert-success');
 				return $this->redirect(array('action' => 'colors'));
 			}
-			$this->Session->setFlash(__("La couleur n'a pas été éditée"), 'alert-danger');
+			$this->Session->setFlash(__("La couleur n'a pas été éditée :'("), 'alert-danger');
 			return $this->redirect(array('action' => 'editcolor'));
 		}
 
@@ -157,23 +156,22 @@ class AdminsController extends AppController {
 	public function editscope($id=null) {
 		$this->loadModel('Scope');
 		if(!$id) {
-			$this->Session->setFlash("Le scope n'a pas été édité", 'alert-danger');
 			return $this->redirect(array('action' => 'scopes'));
 		}
 
 		$scope = $this->Scope->findById($id);
 		if(!$scope) {
-			$this->Session->setFlash(__("Le scope n'a pas été édité"), 'alert-danger');
+			$this->Session->setFlash(__("Ce périmètre n'existe pas"), 'alert-danger');
 			return $this->redirect(array('action' => 'scopes'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Scope->id = $id;
 			if ($this->Scope->save($this->request->data)) {
-				$this->Session->setFlash(__("Le scope a été édité"), 'alert-success');
+				$this->Session->setFlash(__("Le pérmètre a été édité"), 'alert-success');
 				return $this->redirect(array('action' => 'scopes'));
 			}
-			$this->Session->setFlash(__("Le scope n'a pas été édité"), 'alert-danger');
+			$this->Session->setFlash(__("Le périmètre n'a pas été édité"), 'alert-danger');
 			return $this->redirect(array('action' => 'editscope'));
 		}
 
@@ -231,13 +229,12 @@ class AdminsController extends AppController {
 	public function edittype($id=null) {
 		$this->loadModel('Type');
 		if(!$id) {
-			$this->Session->setFlash("Le type n'a pas été édité", 'alert-danger');
 			return $this->redirect(array('action' => 'types'));
 		}
 
 		$type = $this->Type->findById($id);
 		if(!$type) {
-			$this->Session->setFlash(__("Le type n'a pas été édité"), 'alert-danger');
+			$this->Session->setFlash(__("Le type n'existe pas"), 'alert-danger');
 			return $this->redirect(array('action' => 'types'));
 		}
 
@@ -305,23 +302,22 @@ class AdminsController extends AppController {
 	public function editdetail($id=null) {
 		$this->loadModel('Detail');
 		if(!$id) {
-			$this->Session->setFlash("Le détail n'a pas été édité", 'alert-danger');
 			return $this->redirect(array('action' => 'details'));
 		}
 
 		$detail = $this->Detail->findById($id);
 		if(!$detail) {
-			$this->Session->setFlash(__("Le detail n'a pas été édité"), 'alert-danger');
+			$this->Session->setFlash(__("Le détail n'existe pas"), 'alert-danger');
 			return $this->redirect(array('action' => 'details'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Detail->id = $id;
 			if ($this->Detail->save($this->request->data)) {
-				$this->Session->setFlash(__("Le detail a été édité"), 'alert-success');
+				$this->Session->setFlash(__("Le détail a été édité"), 'alert-success');
 				return $this->redirect(array('action' => 'details'));
 			}
-			$this->Session->setFlash(__("Le detail n'a pas été édité"), 'alert-danger');
+			$this->Session->setFlash(__("Le détail n'a pas été édité"), 'alert-danger');
 			return $this->redirect(array('action' => 'editdetail'));
 		}
 

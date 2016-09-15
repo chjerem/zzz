@@ -11,3 +11,6 @@ Voici les différentes méthodes :
 	}
 	?>
 </ul>
+
+<p><?= $this->Html->link('Faire une demande', array('controller' => 'requests', 'action' => 'add')) ?></p>
+<p><?= $this->Html->link('/projects/', array('controller' => 'projects')) ?></p>
